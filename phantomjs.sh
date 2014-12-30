@@ -155,7 +155,7 @@ dataCollector(){
 	TESTTIMESTAMP=$($DATE +"%d-%m-%Y %H:%M")
 	OUTPUTJSON=$OUTPUTJSON"{\"date\": \"$TESTTIMESTAMP\", "
 	ELEMENTCOUNT=${#URLARRAY[*]}
-	for ((i=0; i<$ELEMENTCOUNT; i++)); do
+	for (( i=0 ; i < $ELEMENTCOUNT ; i++ )); do
 		RESULT=$(timeout 30s $PHANTOMJSBIN $TESTTYPESCRIPT ${URLARRAY[$i]} $TESTTYPECONF | $GREP 'Loading' | $AWK '{print $3}')
 		wait
 		if [ -z $RESULT ] ; then
