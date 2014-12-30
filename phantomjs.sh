@@ -93,9 +93,6 @@ SED=$(which sed)
 DATE=$(which date)
 GREP=$(which grep)
 SCRIPTNAME=$(basename $0)
-#PHANTOMJSBIN="/opt/phantomjs/bin/phantomjs"
-#PHANTOMJSFILESDIR="/performancetest/phantonjsfiles"
-#JSONFILE="/performancetest/scripts/blackfriday.json"
 SCRIPTCONFFILE="phantomjs.conf"
 
 # Arquivo de Lock
