@@ -139,12 +139,10 @@ dataCollector(){
 	# phantomjs.conf.
 
 	if [ $TESTTYPE = "speed" ] ; then
-		#OUTPUTJSON="{ \"loadspeed\": [ "
 		TESTTYPESCRIPT="$PHANTOMJSFILESDIR/loadspeed.js"
 		TESTTYPECONF=""
 	else
 		exiterrorfunc "INFO: Funcao 'performance' ainda nao implementada 0"
-		#OUTPUTJSON="{ \"performance\": [ "
 		#TESTTYPESCRIPT="$PHANTOMJSFILESDIR/confess.js"
 		#TESTTYPECONF="$PHANTOMJSFILESDIR/config.json"
 	fi
