@@ -15,11 +15,11 @@
 # in phantomjs.conf file.                                                      #
 #                                                                              #
 # reimlima@gmail.com                                                           #
-# $Id: phantomjs.sh,v 1.4 2014/09/14 reimlima Exp reimlima $                   #
+# $Id: phantomjs.sh,v 2 2015/01/22 reimlima Exp reimlima $                     #
 #                                                                              #
 #[ License ]-------------------------------------------------------------------#
 #                                                                              #
-# Copyright (c) 2014 Reinaldo Marques de Lima reimlima@gmail.com               #
+# Copyright (c) 2015 Reinaldo Marques de Lima reimlima@gmail.com               #
 #                                                                              #
 # PT-br:                                                                       #
 # A permissão  é  concedida,  a título gratuito, a qualquer pessoa que obtenha #
@@ -74,36 +74,43 @@
 #[ Changelog ]-----------------------------------------------------------------#
 #                                                                              #
 # v1   - [01/09/2014]                                                          #
-# - Primeiro release. Exibe informacoes ;                                      #
+# - First release. Only shows informations;                                    #
 # v1.1 - [14/09/2014]                                                          #
-# - Alteracao na exibicao do json para se adequar ao amchart;                  #
+# - Better json file format optimized for amchart;                             #
 # v1.2 - [15/10/2014]                                                          #
-# - Melhorias na execucao usando arquivo de lock;                              #
+# - Lock file improvements;                                                    #
 # v1.3 - [16/10/2014]                                                          #
-# - Inclusao de timeout de 30 segundos na execucao do phantomjs;               #
+# - 30 seconds of timeout for phantomjs execution;                             #
 # v1.4 - [21/10/2014]                                                          #
-# - Cria e atualiza o arquivo json definido em JSONFILE;                       #
+# - Make and update json file defined in JSONFILE;                             #
+# v2   - [22/01/2015]                                                          #
+# - Script now work with threads;                                              #
 #                                                                              #
 #------------------------------------------------------------------------------#
 
-#[ Variaveis ]-----------------------------------------------------------------#
+#[ Variables ]-----------------------------------------------------------------#
 
+RM=$(which rm)
 AWK=$(which awk)
+CAT=$(which cat)
 SED=$(which sed)
 DATE=$(which date)
 GREP=$(which grep)
 SCRIPTNAME=$(basename $0)
+
+# script files
 SCRIPTCONFFILE="phantomjs.conf"
-
-# Arquivo de Lock
 LOCKFILE=/tmp/${SCRIPTNAME}.lock
+FIFOFILE=/tmp/${SCRIPTNAME}.fifo
 
-#[  Funcoes  ]-----------------------------------------------------------------#
+mkfifo $FIFOFILE &> /dev/null
+
+#[ Functions ]-----------------------------------------------------------------#
 
 trapfunction(){
 
-	# Funcao chamada pelo 'trap', so remove o arquivo de lock
-	# se o PID do script for igual ao pid no arquivo.
+	# Function called by 'trap' command. Only removes lock
+	# file if the process PID was the same in the file.
 
 	PIDOFMYSELF=$$
 	PIDINLOCKFILE=$(cat $LOCKFILE)
@@ -120,10 +127,10 @@ trap trapfunction 0 2 3 9 15
 
 exiterrorfunc(){
 
-	# Funcao generica para exibir uma mensagem de erro e
-	# retornar um codigo ao fim do script.
+	# Generic output function, show the message given,
+	# and then exits with the given code.
 
-	# Pega a Mensagem e o Codigo de saida para o comando exit
+	# Parse message and exit code
 	EXITCODE=$(echo $@ | awk '{print $NF}')
 	EXITMESSAGE=$(echo $@ | awk '{ $NF = ""; print $0}')
 	echo
@@ -132,65 +139,80 @@ exiterrorfunc(){
 	exit $EXITCODE
 }
 
+threadCollector(){
+
+	# Thread function, for parallel execution
+
+	RESULT=$(timeout 30s $PHANTOMJSBIN $TESTTYPESCRIPT $1 $TESTTYPECONF | $GREP 'Loading' | $AWK '{print $3}')
+	if [ -z $RESULT ] ; then
+		RESULT="0"
+	fi
+	echo "\"$2\": \"$RESULT\"" > $FIFOFILE &
+
+}
+
 dataCollector(){
 
-	# Funcao que coleta os dados de tempo de carregamento de urls usando
-	# o PhantomJS, URL's que sao testadas estao relacionadas no arquivo
-	# phantomjs.conf.
+	# Data collection function of url's load time using PhantomJS, tested
+	# urls are in phantomjs.conf file.
 
 	if [ $TESTTYPE = "speed" ] ; then
 		TESTTYPESCRIPT="$PHANTOMJSFILESDIR/loadspeed.js"
 		TESTTYPECONF=""
 	else
-		exiterrorfunc "INFO: Funcao 'performance' ainda nao implementada 0"
+		exiterrorfunc "INFO: 'performance' function not implemented yet 0"
 		#TESTTYPESCRIPT="$PHANTOMJSFILESDIR/confess.js"
 		#TESTTYPECONF="$PHANTOMJSFILESDIR/config.json"
 	fi
 
 	TESTTIMESTAMP=$($DATE +"%d-%m-%Y %H:%M")
-	OUTPUTJSON=$OUTPUTJSON"{\"date\": \"$TESTTIMESTAMP\", "
+	OUTPUTJSON=$OUTPUTJSON"{\"date\": \"$TESTTIMESTAMP\","
 	ELEMENTCOUNT=${#URLARRAY[*]}
+
 	for (( i=0 ; i < $ELEMENTCOUNT ; i++ )); do
-		RESULT=$(timeout 30s $PHANTOMJSBIN $TESTTYPESCRIPT ${URLARRAY[$i]} $TESTTYPECONF | $GREP 'Loading' | $AWK '{print $3}')
-		wait
-		if [ -z $RESULT ] ; then
-			RESULT="0"
-		fi
-		OUTPUTJSON=$OUTPUTJSON"\"${SITENAMESARRAY[$i]}\": \"$RESULT\", "
+		threadCollector ${URLARRAY[$i]} ${SITENAMESARRAY[$i]} &
 	done
-	OUTPUTJSON=${OUTPUTJSON%, }
+
+	wait
+
+	THREADRESULT=$($CAT $FIFOFILE)
+	THREADRESULT=$(echo $THREADRESULT| $SED 's/" /", /g')
+	OUTPUTJSON="$OUTPUTJSON $THREADRESULT"
+	$RM $FIFOFILE
+
 	if [ -e $JSONFILE ] ; then
 		$SED -i "s/\(}\) \(\]\)/\1,\n$OUTPUTJSON} \2/" $JSONFILE
 	else
 		echo "[ $OUTPUTJSON} ]" > $JSONFILE
 	fi
+
 	exit 0
 }
 
-#[ Carregando Arquivo de Conf ]------------------------------------------------#
+#[ Load conf file ]------------------------------------------------------------#
 
 if [ -e $SCRIPTCONFFILE ] ; then
 	source $SCRIPTCONFFILE
 else
-	exiterrorfunc "ERRO: Arquivo phantomjs.conf nao encontrado 1"
+	exiterrorfunc "ERROR: phantomjs.conf file not found 1"
 fi
 
-#[ testes, testes, testes ]--------------------------------------#
+#[ tests, tests, tests ]-------------------------------------------------------#
 
-# Valida a existencia de um arquivo de lock
+# Validate if there is a lock file
 if [ -e $LOCKFILE ]; then
-	exiterrorfunc "Script em execucao 1"
+	exiterrorfunc "There is another script running 1"
 else
 	echo "$$" > $LOCKFILE
 fi
 
-# valida se o binario do PhantomJS existe
-[ $PHANTOMJSBIN ] || exiterrorfunc "ERRO: Binario 'phantomjs' nao encontrado 1"
+# Validate if PhantomJS binary exists
+[ $PHANTOMJSBIN ] || exiterrorfunc "ERROR: 'phantomjs' not found 1"
 
-# valida se foram passados parametros de linha de comando
+# Validate if command line option was given
 [ $1 ] || exiterrorfunc "USAGE: $SCRIPTNAME [-s|-p] 1"
 
-# valida se os parametros passados sao validos
+# Validate if command line option is valid
 [ `echo $1 | sed '/-[sp]/!d'` ] || exiterrorfunc "USAGE: $SCRIPTNAME [-s|-p] 1"
 
 while getopts "sp" opts ; do

@@ -1,2 +1,15 @@
-[ {"date": "21-12-2014 18:39", "amazon": "0", "wallmart": "0", "bestbuy": "0"},
-{"date": "29-12-2014 14:50", "amazon": "4405", "wallmart": "5815", "bestbuy": "2772"} ]
+[ {"date": "22-01-2015 17:36", "amazon": "5009", "bestbuy": "2053", "wallmart": "8450"},
+{"date": "22-01-2015 17:37", "amazon": "3502", "wallmart": "3723", "bestbuy": "1692"},
+{"date": "22-01-2015 17:37", "bestbuy": "1858", "wallmart": "3868", "amazon": "2647"},
+{"date": "22-01-2015 17:56", "bestbuy": "1849", "amazon": "2726", "wallmart": "5110"},
+{"date": "22-01-2015 17:56", "wallmart": "8478", "amazon": "2775", "bestbuy": "2420"},
+{"date": "22-01-2015 17:58", "wallmart": "7190", "bestbuy": "1808", "amazon": "1978"},
+{"date": "22-01-2015 18:00", "wallmart": "4528", "bestbuy": "1680", "amazon": "2982"},
+{"date": "22-01-2015 18:02", "wallmart": "5096", "bestbuy": "1659", "amazon": "2331"},
+{"date": "22-01-2015 18:05", "bestbuy": "1925", "amazon": "2896", "wallmart": "3810"},
+{"date": "22-01-2015 18:07", "bestbuy": "1674", "amazon": "2225", "wallmart": "4041"},
+{"date": "22-01-2015 18:09", "bestbuy": "1772", "wallmart": "6358", "amazon": "2741"},
+{"date": "22-01-2015 18:11", "wallmart": "3639", "amazon": "5129", "bestbuy": "1755"},
+{"date": "22-01-2015 18:13", "bestbuy": "2249", "amazon": "2146", "wallmart": "4918"},
+{"date": "22-01-2015 18:15", "amazon": "2276", "bestbuy": "1659", "wallmart": "4593"},
+{"date": "22-01-2015 18:17", "amazon": "2298", "bestbuy": "1649", "wallmart": "5198"} ]

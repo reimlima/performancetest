@@ -1,0 +1,302 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta http-equiv="refresh" content="120">
+		<title>Black Friday | Tempo de Carregamento de Pagina dos Grandes Varejistas</title>
+		<link rel="stylesheet" href="css/mystats.css" type="text/css">
+		<script src="amcharts/amcharts.js" type="text/javascript"></script>
+		<script src="amcharts/serial.js" type="text/javascript"></script>
+
+		<script type="text/javascript">
+			var chart;
+			var chartData;
+			
+			AmCharts.loadJSON = function(file){
+				var request;
+				if (window.XMLHttpRequest) {
+					request = new XMLHttpRequest();
+					// load
+					request.open('GET', file, false);
+					request.send();
+					return eval(request.responseText)
+					//setData(request.responseText);
+				}
+			};
+			
+			AmCharts.ready(function () {
+				// SERIAL CHART
+				chart = new AmCharts.AmSerialChart();
+				chart.pathToImages = "amcharts/images/";
+				chart.dataProvider = AmCharts.loadJSON('file.json');
+				chart.categoryField = "date";
+				chart.dataDateFormat = "DD-MM-YYYY JJ:NN";
+
+				// AXES
+				// category
+				var categoryAxis = chart.categoryAxis;
+				categoryAxis.parseDates = false; // as our data is date-based, we set parseDates to true
+				categoryAxis.minPeriod = "NN"; // our data is per minute, so we set minPeriod to NN
+				categoryAxis.minorGridEnabled = true;
+				categoryAxis.axisColor = "#DADADA";
+				categoryAxis.dateFormats = [ 
+					{ period: 'DD', format: 'DD' }, 
+					{ period: 'MM', format: 'MM' }, 
+					{ period: 'YYYY', format: 'YYYY' }, 
+					{ period: 'JJ', format: 'JJ' }, 
+					{ period: 'NN', format: 'NN'} ];
+
+				var valueAxis1 = new AmCharts.ValueAxis();
+				valueAxis1.axisColor = "#FF6600";
+				valueAxis1.axisThickness = 1;
+				valueAxis1.gridAlpha = 0;
+				chart.addValueAxis(valueAxis1);
+
+				var valueAxis2 = new AmCharts.ValueAxis();
+				valueAxis2.position = "right"; // this line makes the axis to appear on the right
+				valueAxis2.axisColor = "#FCD202";
+				valueAxis2.gridAlpha = 0;
+				valueAxis2.axisThickness = 1;
+				chart.addValueAxis(valueAxis2);
+
+				valueAxis3 = new AmCharts.ValueAxis();
+				valueAxis3.offset = 50; // this line makes the axis to appear detached from plot area
+				valueAxis3.gridAlpha = 0;
+				valueAxis3.axisColor = "#B0DE09";
+				valueAxis3.axisThickness = 1;
+				chart.addValueAxis(valueAxis3);
+
+				valueAxis4 = new AmCharts.ValueAxis();
+				valueAxis4.offset = 50; // this line makes the axis to appear detached from plot area
+				valueAxis4.position = "right"; // this line makes the axis to appear on the right
+				valueAxis4.axisColor = "#1E90FF";
+				valueAxis4.axisThickness = 1;
+				chart.addValueAxis(valueAxis4);
+
+				valueAxis5 = new AmCharts.ValueAxis();
+				valueAxis5.offset = 50; // this line makes the axis to appear detached from plot area
+				valueAxis5.position = "right"; // this line makes the axis to appear on the right
+				valueAxis5.axisColor = "#1E90FF";
+				valueAxis5.axisThickness = 1;
+				chart.addValueAxis(valueAxis5);
+
+				valueAxis6 = new AmCharts.ValueAxis();
+				valueAxis6.offset = 50; // this line makes the axis to appear detached from plot area
+				valueAxis6.position = "right"; // this line makes the axis to appear on the right
+				valueAxis6.axisColor = "#1E90FF";
+				valueAxis6.axisThickness = 1;
+				chart.addValueAxis(valueAxis6);
+ 
+				valueAxis7 = new AmCharts.ValueAxis();
+				valueAxis7.offset = 50; // this line makes the axis to appear detached from plot area
+				valueAxis7.position = "right"; // this line makes the axis to appear on the right
+				valueAxis7.axisColor = "#1E90FF";
+				valueAxis7.axisThickness = 1;
+				chart.addValueAxis(valueAxis7);
+
+				valueAxis8 = new AmCharts.ValueAxis();
+				valueAxis8.offset = 50; // this line makes the axis to appear detached from plot area
+				valueAxis8.position = "right"; // this line makes the axis to appear on the right
+				valueAxis8.axisColor = "#1E90FF";
+				valueAxis8.axisThickness = 1;
+				chart.addValueAxis(valueAxis8);
+
+				valueAxis9 = new AmCharts.ValueAxis();
+				valueAxis9.offset = 50; // this line makes the axis to appear detached from plot area
+				valueAxis9.position = "right"; // this line makes the axis to appear on the right
+				valueAxis9.axisColor = "#1E90FF";
+				valueAxis9.axisThickness = 1;
+				chart.addValueAxis(valueAxis9);
+
+				valueAxis10 = new AmCharts.ValueAxis();
+				valueAxis10.offset = 50; // this line makes the axis to appear detached from plot area
+				valueAxis10.position = "right"; // this line makes the axis to appear on the right
+				valueAxis10.axisColor = "#1E90FF";
+				valueAxis10.axisThickness = 1;
+				chart.addValueAxis(valueAxis10);
+
+				valueAxis11 = new AmCharts.ValueAxis();
+				valueAxis11.offset = 50; // this line makes the axis to appear detached from plot area
+				valueAxis11.position = "right"; // this line makes the axis to appear on the right
+				valueAxis11.axisColor = "#1E90FF";
+				valueAxis11.axisThickness = 1;
+				chart.addValueAxis(valueAxis11);
+
+				valueAxis12 = new AmCharts.ValueAxis();
+				valueAxis12.offset = 50; // this line makes the axis to appear detached from plot area
+				valueAxis12.position = "right"; // this line makes the axis to appear on the right
+				valueAxis12.axisColor = "#1E90FF";
+				valueAxis12.axisThickness = 1;
+				chart.addValueAxis(valueAxis12);
+
+				valueAxis13 = new AmCharts.ValueAxis();
+				valueAxis13.offset = 50; // this line makes the axis to appear detached from plot area
+				valueAxis13.position = "right"; // this line makes the axis to appear on the right
+				valueAxis13.axisColor = "#1E90FF";
+				valueAxis13.axisThickness = 1;
+				chart.addValueAxis(valueAxis13);
+
+				// GRAPHS
+				var graph1 = new AmCharts.AmGraph();
+				graph1.valueAxis = valueAxis1; // we have to indicate which value axis should be used
+				graph1.title = "pagseguro";
+				graph1.valueField = "pagseguro";
+				graph1.bullet = "round";
+				graph1.hideBulletsCount = 30;
+				graph1.bulletBorderThickness = 1;
+				chart.addGraph(graph1);
+
+				var graph2 = new AmCharts.AmGraph();
+				graph2.valueAxis = valueAxis2; // we have to indicate which value axis should be used
+				graph2.title = "americanas";
+				graph2.valueField = "americanas";
+				graph2.bullet = "round";
+				graph2.hideBulletsCount = 30;
+				graph2.bulletBorderThickness = 1;
+				chart.addGraph(graph2);
+
+				var graph3 = new AmCharts.AmGraph();
+				graph3.valueAxis = valueAxis3; // we have to indicate which value axis should be used
+				graph3.title = "submarino";
+				graph3.valueField = "submarino";
+				graph3.bullet = "round";
+				graph3.hideBulletsCount = 30;
+				graph3.bulletBorderThickness = 1;
+				chart.addGraph(graph3);
+
+				var graph4 = new AmCharts.AmGraph();
+				graph4.valueAxis = valueAxis4; // we have to indicate which value axis should be used
+				graph4.title = "magazineluiza";
+				graph4.valueField = "magazineluiza";
+				graph4.bullet = "round";
+				graph4.hideBulletsCount = 30;
+				graph4.bulletBorderThickness = 1;
+				chart.addGraph(graph4);
+               
+				var graph5 = new AmCharts.AmGraph();
+				graph5.valueAxis = valueAxis5; // we have to indicate which value axis should be used
+				graph5.title = "wallmart";
+				graph5.valueField = "wallmart";
+				graph5.bullet = "round";
+				graph5.hideBulletsCount = 30;
+				graph5.bulletBorderThickness = 1;
+				chart.addGraph(graph5);
+               
+				var graph6 = new AmCharts.AmGraph();
+				graph6.valueAxis = valueAxis6; // we have to indicate which value axis should be used
+				graph6.title = "saraiva";
+				graph6.valueField = "saraiva";
+				graph6.bullet = "round";
+				graph6.hideBulletsCount = 30;
+				graph6.bulletBorderThickness = 1;
+				chart.addGraph(graph6);
+               
+				var graph7 = new AmCharts.AmGraph();
+				graph7.valueAxis = valueAxis7; // we have to indicate which value axis should be used
+				graph7.title = "livrariacultura";
+				graph7.valueField = "livrariacultura";
+				graph7.bullet = "round";
+				graph7.hideBulletsCount = 30;
+				graph7.bulletBorderThickness = 1;
+				chart.addGraph(graph7);
+               
+				var graph8 = new AmCharts.AmGraph();
+				graph8.valueAxis = valueAxis8; // we have to indicate which value axis should be used
+				graph8.title = "fnac";
+				graph8.valueField = "fnac";
+				graph8.bullet = "round";
+				graph8.hideBulletsCount = 30;
+				graph8.bulletBorderThickness = 1;
+				chart.addGraph(graph8);
+               
+				var graph9 = new AmCharts.AmGraph();
+				graph9.valueAxis = valueAxis9; // we have to indicate which value axis should be used
+				graph9.title = "fastshop";
+				graph9.valueField = "fastshop";
+				graph9.bullet = "round";
+				graph9.hideBulletsCount = 30;
+				graph9.bulletBorderThickness = 1;
+				chart.addGraph(graph9);
+               
+				var graph10 = new AmCharts.AmGraph();
+				graph10.valueAxis = valueAxis10; // we have to indicate which value axis should be used
+				graph10.title = "ricardoeletro";
+				graph10.valueField = "ricardoeletro";
+				graph10.bullet = "round";
+				graph10.hideBulletsCount = 30;
+				graph10.bulletBorderThickness = 1;
+				chart.addGraph(graph10);
+               
+				var graph11 = new AmCharts.AmGraph();
+				graph11.valueAxis = valueAxis11; // we have to indicate which value axis should be used
+				graph11.title = "centauro";
+				graph11.valueField = "centauro";
+				graph11.bullet = "round";
+				graph11.hideBulletsCount = 30;
+				graph11.bulletBorderThickness = 1;
+				chart.addGraph(graph11);
+               
+				var graph12 = new AmCharts.AmGraph();
+				graph12.valueAxis = valueAxis12; // we have to indicate which value axis should be used
+				graph12.title = "kanui";
+				graph12.valueField = "kanui";
+				graph12.bullet = "round";
+				graph12.hideBulletsCount = 30;
+				graph12.bulletBorderThickness = 1;
+				chart.addGraph(graph12);
+               
+				var graph13 = new AmCharts.AmGraph();
+				graph13.valueAxis = valueAxis13; // we have to indicate which value axis should be used
+				graph13.title = "netshoes";
+				graph13.valueField = "netshoes";
+				graph13.bullet = "round";
+				graph13.hideBulletsCount = 30;
+				graph13.bulletBorderThickness = 1;
+				chart.addGraph(graph13);
+               
+				// CURSOR
+				var chartCursor = new AmCharts.ChartCursor();
+				chartCursor.cursorPosition = "mouse";
+				chart.addChartCursor(chartCursor);
+
+				// SCROLLBAR
+				var chartScrollbar = new AmCharts.ChartScrollbar();
+				chart.addChartScrollbar(chartScrollbar);
+
+				// LEGEND
+				var legend = new AmCharts.AmLegend();
+				legend.marginLeft = 110;
+				legend.useGraphSettings = true;
+				chart.addLegend(legend);
+
+				// WRITE
+				chart.write("chartdiv");
+			});
+
+			// this method is called when chart is first inited as we listen for "dataUpdated" event
+			function zoomChart() {
+			// different zoom methods can be used - zoomToIndexes, zoomToDates, zoomToCategoryValues
+				chart.zoomToIndexes(10, 20);
+			}
+		</script>
+	</head>
+	<body>
+		<div id="chartdiv" style="width: 100%; height: 400px;"></div>
+		Gr&aacute;fico com os dados de tempo de carregamento de p&aacute;gina dos principais varejistas Brasileiros<br>
+		<br>
+		Considera&ccedil;&otilde;es:<br>
+		- Os valores exibidos quando se passa o mouse est&atilde;o em segundos com a precis&atilde;o de 3 casas decimais depois da v&iacute;rgula;<br>
+		- Valor "0" quer dizer que o Site do varejista demorou mais de 30 segundos para responder;<br>
+		- A falta de dados em algum per&iacute;odo significa que a execu&ccedil;&atilde;o anterior demorou mais de 2 minutos para terminar e a execu&ccedil;&atilde;o "atual" n&atilde;o conseguiu rodar;<br>
+		- Clique no nome de algum varejista para "desligar" e "ligar" a exibi&ccedil;&atilde;o da m&eacute;trica;<br>
+		- Os testes foram executados a partir de uma VM Hospedada fora do Brasil, logo &eacute; a simula&ccedil;&atilde;o de um acesso vindo do exterior;<br>
+		- Esse &eacute; um beta v1, ent&atilde;o est&aacute; bem b&aacute;sico, sem muita firula e exibindo basicamente os dados coletados, mas faz o que eu me propus a fazer;<br>
+		<br>
+		Feito em:<br>
+		Javascript (amcharts);<br>
+		PhantomJS;<br>
+		JSON;<br>
+		Shell Script;<br>
+		<!-- Atualiza&ccedil;&atilde;o a cada 2 min&uacute;tos;-->
+	</body>
+</html>
