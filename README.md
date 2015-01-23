@@ -48,10 +48,13 @@ Inside the "performanceTestGraph/" directory you'll find a file called "index_wi
 Edit the file with the names of the sites the same way are in phantomjs.conf file.
 
 Change the variables:
+
 graph1.title = "pagseguro";
+
 graph1.valueField = "pagseguro";
 
 graph2.title = "americanas";
+
 graph2.valueField = "americanas";
 
 and so forth.
