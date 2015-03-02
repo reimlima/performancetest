@@ -111,6 +111,28 @@
 
 				// WRITE
 				chart.write("chartdiv");
+
+				// set up the chart to update every second
+				// setInterval(function () {
+				// normally you would load new datapoints here,
+				// but we will just generate some random values
+				// and remove the value from the beginning so that
+				// we get nice sliding graph feeling
+        
+				// remove datapoint from the beginning
+				// chart.dataProvider.shift();
+        
+				// add new one at the end
+				// day++;
+				// var newDate = new Date(firstDate);
+				// newDate.setDate(newDate.getDate() + day);
+				// var visits = Math.round(Math.random() * 40) - 20;
+				// chart.dataProvider.push({
+				// date: newDate,
+				// visits: visits
+				// });
+				// chart.validateData();
+				// }, 1000);
 			});
 
 			// this method is called when chart is first inited as we listen for "dataUpdated" event

@@ -5,9 +5,20 @@ Script that collect load speed information from a list of websites
 
 Automating PhantomJS bulk execution.
 
-dependence
+Dependence
 ===============
 PhantomJS binary ~> http://phantomjs.org/
+
+Changelog
+===============
+
+09/01/2014	- v1	- First release. Only shows informations
+09/14/2014	- v1.1	- Better json file format optimized for amchart
+10/15/2014	- v1.2	- Lock file improvements
+10/16/2014	- v1.3	- 30 seconds of timeout for phantomjs execution
+10/21/2014	- v1.4	- Make and update json file defined in JSONFILE
+01/22/2015	- v2	- Script now work with threads
+03/02/2015	- v2.1	- Fix PhantomJS binary validation
 
 How to use it
 ===============

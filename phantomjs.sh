@@ -15,7 +15,7 @@
 # in phantomjs.conf file.                                                      #
 #                                                                              #
 # reimlima@gmail.com                                                           #
-# $Id: phantomjs.sh,v 2 2015/01/22 reimlima Exp reimlima $                     #
+# $Id: phantomjs.sh,v 2 2015/03/02 reimlima Exp reimlima $                     #
 #                                                                              #
 #[ License ]-------------------------------------------------------------------#
 #                                                                              #
@@ -73,18 +73,13 @@
 #                                                                              #
 #[ Changelog ]-----------------------------------------------------------------#
 #                                                                              #
-# v1   - [01/09/2014]                                                          #
-# - First release. Only shows informations;                                    #
-# v1.1 - [14/09/2014]                                                          #
-# - Better json file format optimized for amchart;                             #
-# v1.2 - [15/10/2014]                                                          #
-# - Lock file improvements;                                                    #
-# v1.3 - [16/10/2014]                                                          #
-# - 30 seconds of timeout for phantomjs execution;                             #
-# v1.4 - [21/10/2014]                                                          #
-# - Make and update json file defined in JSONFILE;                             #
-# v2   - [22/01/2015]                                                          #
-# - Script now work with threads;                                              #
+# v1   - [01/09/2014] - First release. Only shows informations;                #
+# v1.1 - [14/09/2014] - Better json file format optimized for amchart;         #
+# v1.2 - [15/10/2014] - Lock file improvements;                                #
+# v1.3 - [16/10/2014] - 30 seconds of timeout for phantomjs execution;         #
+# v1.4 - [21/10/2014] - Make and update json file defined in JSONFILE;         #
+# v2   - [22/01/2015] - Script now work with threads;                          #
+# v2.1 - [03/02/2015] - Fix PhantomJS binary validation;                       #
 #                                                                              #
 #------------------------------------------------------------------------------#
 
@@ -207,7 +202,7 @@ else
 fi
 
 # Validate if PhantomJS binary exists
-[ $PHANTOMJSBIN ] || exiterrorfunc "ERROR: 'phantomjs' not found 1"
+[ -e $PHANTOMJSBIN ] || exiterrorfunc "ERROR: 'phantomjs' not found 1"
 
 # Validate if command line option was given
 [ $1 ] || exiterrorfunc "USAGE: $SCRIPTNAME [-s|-p] 1"
